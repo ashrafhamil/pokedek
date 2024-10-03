@@ -1,0 +1,54 @@
+/* src/styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Additional styles for spinner */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Spinner overlay */
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Optional: translucent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  /* Ensure it appears above other content */
+}
+
+.custom-width {
+  width: 240px;
+  /* Move the width here */
+}
+
+.relative:hover .hidden {
+  display: block;
+  /* Show the tooltip on hover */
+}
+
+.relative:hover .tooltip {
+  display: block;
+}
+
+/* styles.css or your main CSS file */
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
