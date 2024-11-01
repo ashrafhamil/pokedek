@@ -8,12 +8,20 @@ import PokemonModal from '@/components/PokemonModal';
 import AudioPlayer from '@/components/AudioPlayer';
 import PokemonCardGrid from '@/components/PokemonCardGrid';
 
+interface Ability {
+  name: string;
+  description: string;
+}
+
 interface Pokemon {
   name: string;
   url: string;
   image: string;
   types: string[];
   base_experience: number;
+  weight: number;
+  height: number;
+  abilities: Ability[];
 }
 
 interface PokemonType {
@@ -59,6 +67,18 @@ const Home = () => {
             image: pokemonData.sprites.front_default || 'default_image_url.png',
             types: pokemonData.types.map((typeObj: PokemonType) => typeObj.type.name),
             base_experience: pokemonData.base_experience,
+            weight: pokemonData.weight,
+            height: pokemonData.height,
+            abilities: await Promise.all(
+              pokemonData.abilities.map(async (abilityObj: { ability: { name: string; url: string } }) => {
+                const abilityDetails = await axios.get(abilityObj.ability.url);
+                const abilityDescription = abilityDetails.data.effect_entries.find((entry: { language: { name: string; }; }) => entry.language.name === 'en')?.effect || 'No description available';
+                return {
+                  name: abilityObj.ability.name,
+                  description: abilityDescription
+                };
+              })
+            ),
           };
         });
 
@@ -128,6 +148,18 @@ const Home = () => {
             image: pokemonData.sprites.front_default || 'default_image_url.png',
             types: pokemonData.types.map((typeObj: PokemonType) => typeObj.type.name),
             base_experience: pokemonData.base_experience,
+            weight: pokemonData.weight,
+            height: pokemonData.height,
+            abilities: await Promise.all(
+              pokemonData.abilities.map(async (abilityObj: { ability: { name: string; url: string } }) => {
+                const abilityDetails = await axios.get(abilityObj.ability.url);
+                const abilityDescription = abilityDetails.data.effect_entries.find((entry: { language: { name: string; }; }) => entry.language.name === 'en')?.effect || 'No description available';
+                return {
+                  name: abilityObj.ability.name,
+                  description: abilityDescription
+                };
+              })
+            ),
           };
         });
 

@@ -1,23 +1,24 @@
 import React from 'react';
 import PokemonType from './PokemonType';
 
+interface Ability {
+    name: string;
+    description: string;
+}
 interface Pokemon {
     name: string;
     url: string;
     image: string;
     types: string[];
     base_experience: number;
-}
-
-interface PokemonType {
-    type: {
-        name: string;
-    };
+    weight: number;
+    height: number;
+    abilities: Ability[];
 }
 
 interface PokemonCardGridProps {
     pokemonList: Pokemon[];
-    handleCardClick: (pokemon: Pokemon) => void; // Function type for handling clicks
+    handleCardClick: (pokemon: Pokemon) => void;
 }
 
 const PokemonCardGrid: React.FC<PokemonCardGridProps> = ({ pokemonList, handleCardClick }) => {
