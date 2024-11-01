@@ -161,7 +161,7 @@ const Home = () => {
     <div className='bg-gradient-to-b from-blue-300 to-green-300'>
       <div className="container mx-auto p-6">
         <div className="flex flex-col items-center mb-8">
-          <h1 className="text-3xl font-bold text-white text-shadow">Pokémon Cards</h1>
+          <h1 className="text-3xl font-bold text-white text-shadow">Pokémon Info</h1>
           <AudioPlayer src="/music/ruby_bg_music.mp3" />
           {/* <div className="text-white">
             <p>Unique Visitors: {uniqueVisitorCount}</p>
