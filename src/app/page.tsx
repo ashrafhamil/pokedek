@@ -5,7 +5,7 @@ import axios from 'axios';
 import Modal from '@/components/Modal';
 import PokemonType from '@/components/PokemonType';
 import PokemonModal from '@/components/PokemonModal';
-
+import AudioPlayer from '@/components/AudioPlayer';
 
 interface Pokemon {
   name: string;
@@ -29,27 +29,12 @@ const Home = () => {
   const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null); // Reference for audio element
   const observer = useRef<IntersectionObserver | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false); // State to track if audio is playing
 
   const handleCardClick = (pokemon: Pokemon) => {
     setSelectedPokemon(pokemon);
     setShowModal(true);
   };
-
-  useEffect(() => {
-    // Create and play audio on component mount
-    audioRef.current = new Audio('/music/ruby_bg_music.mp3'); // Correct path
-    audioRef.current.loop = true; // Optional: Loop the audio
-    audioRef.current.volume = 0.1; // Set the volume to 50%
-    audioRef.current.play().catch((error) => console.error('Error playing audio:', error)); // Handle errors
-
-    return () => {
-      audioRef.current?.pause(); // Pause audio on component unmount
-      audioRef.current = null; // Clean up reference
-    };
-  }, []); // Empty dependency array to run only once on mount
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -158,15 +143,6 @@ const Home = () => {
     fetchMorePokemon();
   }, [offset, loadingMore]);
 
-  const handlePlayPause = () => {
-    if (isPlaying) {
-      audioRef.current?.pause(); // Pause audio
-    } else {
-      audioRef.current?.play().catch((error) => console.error('Error playing audio:', error)); // Play audio
-    }
-    setIsPlaying(!isPlaying); // Toggle the playing state
-  };
-
   const handleContinue = () => {
     setShowModal(false);
     setLoadingMore(true);
@@ -185,19 +161,12 @@ const Home = () => {
       <div className="container mx-auto p-6">
         <div className="flex flex-col items-center mb-8">
           <h1 className="text-3xl font-bold text-white text-shadow">Pokémon Cards</h1>
-          <button
-            onClick={handlePlayPause}
-            className="bg-blue-500 text-white py-2 px-4 rounded shadow hover:bg-blue-700 transition duration-200 mt-4"
-          >
-            {isPlaying ? 'Pause  Music' : 'Back to Littleroot Town'}
-          </button>
+          <AudioPlayer src="/music/ruby_bg_music.mp3" />
           {/* <div className="text-white">
             <p>Unique Visitors: {uniqueVisitorCount}</p>
           </div> */}
         </div>
         {error && <div className="text-red-500 text-center mb-4">{error}</div>}
-
-
 
         <div className="flex justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
