@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import Modal from '@/components/Modal';
+import WildPokemonAppearModal from '@/components/Modal';
 import PokemonType from '@/components/PokemonType';
 import PokemonModal from '@/components/PokemonModal';
 import AudioPlayer from '@/components/AudioPlayer';
@@ -10,7 +10,7 @@ import AudioPlayer from '@/components/AudioPlayer';
 interface Pokemon {
   name: string;
   url: string;
-  image: string; // Always a string, fallback handled in the fetching function
+  image: string;
   types: string[];
   base_experience: number;
 }
@@ -200,7 +200,7 @@ const Home = () => {
           </div>
         )}
 
-        <Modal
+        <WildPokemonAppearModal
           isOpen={showModal}
           onClose={handleStopLoading}
           onContinue={handleContinue}

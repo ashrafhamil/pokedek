@@ -1,4 +1,3 @@
-// Modal.tsx
 import React from 'react';
 
 interface ModalProps {
@@ -7,7 +6,7 @@ interface ModalProps {
     onContinue: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onContinue }) => {
+const WildPokemonAppearModal: React.FC<ModalProps> = ({ isOpen, onClose, onContinue }) => {
     if (!isOpen) return null;
 
     return (
@@ -30,4 +29,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onContinue }) => {
     );
 };
 
-export default Modal;
+export default WildPokemonAppearModal;
