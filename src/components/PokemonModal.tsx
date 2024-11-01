@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PokemonType from './PokemonType';
 
 interface Ability {
@@ -30,6 +30,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({
     selectedPokemon,
 }) => {
     const [visibleAbility, setVisibleAbility] = useState<number | null>(null);
+    const modalRef = useRef<HTMLDivElement | null>(null); // Reference for the modal container
 
     // Reset visibleAbility when the modal is closed
     useEffect(() => {
@@ -37,6 +38,23 @@ const PokemonModal: React.FC<PokemonModalProps> = ({
             setVisibleAbility(null);
         }
     }, [isOpen]);
+
+    // Close modal if clicked outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+                onClose();
+            }
+        };
+
+        // Add event listener for clicks
+        document.addEventListener('mousedown', handleClickOutside);
+
+        // Clean up the event listener on component unmount
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [onClose]);
 
     if (!isOpen || !selectedPokemon) return null;
 
@@ -52,7 +70,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-4 rounded-lg shadow-lg w-96">
+            <div ref={modalRef} className="bg-white p-4 rounded-lg shadow-lg w-96 xl:w-1/3">
                 <h2 className="text-xl font-semibold mb-2">{selectedPokemon.name}</h2>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
