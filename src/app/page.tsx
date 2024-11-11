@@ -7,6 +7,8 @@ import PokemonType from '@/components/PokemonType';
 import PokemonModal from '@/components/PokemonModal';
 import AudioPlayer from '@/components/AudioPlayer';
 import PokemonCardGrid from '@/components/PokemonCardGrid';
+import GlassButton from '@/components/GlassButton';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 interface Ability {
   name: string;
@@ -190,8 +192,10 @@ const Home = () => {
   }
 
   return (
+    <Router>
     <div className='bg-gradient-to-b from-blue-300 to-green-300'>
       <div className="container mx-auto p-6">
+      <GlassButton title="Search Pokémon" />
         <div className="flex flex-col items-center mb-8">
           <h1 className="text-3xl font-bold text-white text-shadow">Pokémon Info</h1>
           <AudioPlayer src="/music/ruby_bg_music.mp3" />
@@ -223,6 +227,7 @@ const Home = () => {
         />
       </div>
     </div>
+    </Router>
   );
 };
 
